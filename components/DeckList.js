@@ -5,7 +5,7 @@ import { getDecks } from '../utils/helpers'
 
 export default class DeckList extends Component {
   renderItem = ({ item }) => {
-    return <DeckListItem {...item} />
+    return <DeckListItem {...item} navigation={this.props.navigation} />
   }
   render() {
     const dummyData = getDecks()
