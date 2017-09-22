@@ -1,34 +1,61 @@
 import { AsyncStorage } from 'react-native'
 
-export const DECKS_STORAGE_KEY = 'mobile-flashcards:decks'
+export const DECKS_STORAGE_KEY = 'flash:decks'
 
-export function setDummyData() {
-  let dummyData = {
-    React: {
-      title: 'React',
-      questions: [
-        {
-          question: 'What is React?',
-          answer: 'A library for managing user interfaces'
-        },
-        {
-          question: 'Where do you make Ajax requests in React?',
-          answer: 'The componentDidMount lifecycle event'
-        }
-      ]
-    },
-    JavaScript: {
-      title: 'JavaScript',
-      questions: [
-        {
-          question: 'What is a closure?',
-          answer: 'The combination of a function and the lexical environment within which that function was declared.'
-        }
-      ]
+export async function getDecks() {
+  // AsyncStorage fetch of decks
+  let response = await AsyncStorage.getItem(DECKS_STORAGE_KEY);
+  let decks = await JSON.parse(response) || {};
+  return decks;
+}
+
+export async function getDeck(id) {
+  // asyncStorage getItem decks - access decks by id key and return that deck object
+  let decks = await getDecks();
+  return decks[id];
+}
+
+export async function saveDeckTitle(title) {
+  let decks = await getDecks();
+  let updatedDecks = {
+    ...decks,
+    [title]: {
+      title,
+      questions: []
     }
   }
 
-  AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(dummyData))
+  await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(updatedDecks));
+}
 
-  return dummyData
+export async function addCardToDeck(title, question) {
+  // getDeck by title/id. Add new question
+  // save decks with this new question
+  let decks = await getDecks();
+  let deck = await getDeck(title);
+  let updatedDeck = {
+    title,
+    questions: [
+      ...deck.questions,
+      question
+    ]
+  }
+  let updatedDecks = {
+    ...decks,
+    title: updatedDeck
+  }
+
+  await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(updatedDecks));
+}
+
+export async function getDecksArray() {
+  let decks = await getDecks();
+  let decksArray = Object.keys(decks).map((key) => {
+    return decks[key]
+  })
+  return decksArray;
+}
+
+export async function clearAll() {
+  await AsyncStorage.clear();
 }

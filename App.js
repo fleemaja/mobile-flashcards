@@ -22,7 +22,7 @@ const Tabs = TabNavigator({
     screen: Stack,
     navigationOptions: {
       tabBarLabel: 'My Decks',
-      tabBarIcon: ({ tintColor }) => <Entypo name='list' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Entypo name='list' size={30} color={tintColor} />,
     }
   },
   NewDeck: {
