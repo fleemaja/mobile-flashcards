@@ -1,16 +1,21 @@
 import React, { Component } from 'react'
 import { View, KeyboardAvoidingView, Text, TouchableOpacity, TextInput } from 'react-native'
-import { saveDeckTitle } from '../utils/_decks'
+import { connect } from 'react-redux'
+import { saveDeckTitle } from '../actions'
 
-export default class NewDeck extends Component {
+class NewDeck extends Component {
 
   state = {
     title: ''
   }
 
   handleSubmit = () => {
-    saveDeckTitle(this.state.title)
-    this.props.navigation.navigate('Decks');
+    const title = this.state.title
+    if (title !== '') {
+      this.props.saveDeckTitle(title)
+      this.props.navigation.navigate('Decks')
+      this.setState({ title: '' })
+    }
   }
 
   render() {
@@ -27,3 +32,11 @@ export default class NewDeck extends Component {
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return {
+    saveDeckTitle: (title) => dispatch(saveDeckTitle(title))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(NewDeck)

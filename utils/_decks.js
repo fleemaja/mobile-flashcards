@@ -1,22 +1,25 @@
 import { AsyncStorage } from 'react-native'
+export const DECKS_STORAGE_KEY = 'flashcards:decks'
 
-export const DECKS_STORAGE_KEY = 'flash:decks'
-
-export async function getDecks() {
-  // AsyncStorage fetch of decks
+async function retrieveDecks() {
   let response = await AsyncStorage.getItem(DECKS_STORAGE_KEY);
   let decks = await JSON.parse(response) || {};
   return decks;
 }
 
+export async function getDecks() {
+  let decks = await retrieveDecks();
+  return decks;
+}
+
 export async function getDeck(id) {
-  // asyncStorage getItem decks - access decks by id key and return that deck object
-  let decks = await getDecks();
+  let decks = await retrieveDecks();
   return decks[id];
 }
 
 export async function saveDeckTitle(title) {
-  let decks = await getDecks();
+  let decks = await retrieveDecks();
+
   let updatedDecks = {
     ...decks,
     [title]: {
@@ -26,13 +29,13 @@ export async function saveDeckTitle(title) {
   }
 
   await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(updatedDecks));
+  return updatedDecks;
 }
 
 export async function addCardToDeck(title, question) {
-  // getDeck by title/id. Add new question
-  // save decks with this new question
-  let decks = await getDecks();
-  let deck = await getDeck(title);
+  let decks = await retrieveDecks();
+  let deck = await getDeck(id);
+
   let updatedDeck = {
     title,
     questions: [
@@ -46,16 +49,5 @@ export async function addCardToDeck(title, question) {
   }
 
   await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(updatedDecks));
-}
-
-export async function getDecksArray() {
-  let decks = await getDecks();
-  let decksArray = Object.keys(decks).map((key) => {
-    return decks[key]
-  })
-  return decksArray;
-}
-
-export async function clearAll() {
-  await AsyncStorage.clear();
+  return updatedDecks;
 }
