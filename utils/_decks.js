@@ -34,7 +34,7 @@ export async function saveDeckTitle(title) {
 
 export async function addCardToDeck(title, question) {
   let decks = await retrieveDecks();
-  let deck = await getDeck(id);
+  let deck = await getDeck(title);
 
   let updatedDeck = {
     title,
@@ -45,7 +45,7 @@ export async function addCardToDeck(title, question) {
   }
   let updatedDecks = {
     ...decks,
-    title: updatedDeck
+    [title]: updatedDeck
   }
 
   await AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(updatedDecks));

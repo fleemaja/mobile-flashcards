@@ -6,7 +6,7 @@ export default class DeckListItem extends Component {
     const { title, questions, navigation } = this.props
     return (
       <View style={styles.listItem}>
-        <TouchableOpacity onPress={() => navigation.navigate('DeckDetail', { title, questions })} >
+        <TouchableOpacity onPress={() => navigation.navigate('DeckDetail', { title })} >
           <Text>{ title }</Text>
           <Text>{ `${questions.length} cards` }</Text>
         </TouchableOpacity>

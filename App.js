@@ -2,6 +2,7 @@ import React from 'react'
 import { View, Platform, StatusBar } from 'react-native'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
+import NewCard from './components/NewCard'
 import NewDeck from './components/NewDeck'
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import { Entypo } from '@expo/vector-icons'
@@ -37,6 +38,9 @@ const Stack = StackNavigator({
   },
   DeckDetail: {
     screen: DeckDetail
+  },
+  NewCard: {
+    screen: NewCard
   }
 })
 
