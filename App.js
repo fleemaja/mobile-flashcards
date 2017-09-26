@@ -13,6 +13,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import thunk from 'redux-thunk'
+import { setLocalNotification } from './utils/_notifications'
 
 const logger = store => next => action => {
   console.group(action.type)
@@ -78,6 +79,9 @@ function FlashcardsStatusBar({...props}) {
 }
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification()
+  }
   render() {
     return (
       <Provider store={store}>

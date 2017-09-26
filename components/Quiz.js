@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import { connect } from 'react-redux'
 import QuizResults from './QuizResults'
+import { setLocalNotification, clearLocalNotification } from '../utils/_notifications'
 
 export default class Quiz extends Component {
 
@@ -46,6 +47,8 @@ export default class Quiz extends Component {
     const questions = deck.questions
     const { currentQuestion, showQuestion, numberCorrect, quizOver } = this.state
     if (quizOver) {
+      clearLocalNotification()
+        .then(setLocalNotification)
       const percentCorrect = Math.round((numberCorrect/questions.length) * 100)
       return (
         <QuizResults percentCorrect={percentCorrect}
