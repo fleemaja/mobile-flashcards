@@ -25,7 +25,7 @@ class NewCard extends Component {
     const title = this.props.navigation.state.params.title
     return (
       <KeyboardAvoidingView behavior='padding' >
-        <Text>{ `Add Card to the '${title}' Deck` }</Text>
+        <Text>Add card to the {title} Deck</Text>
         <Text>Question</Text>
         <TextInput
           onChangeText={(question) => this.setState({question})}

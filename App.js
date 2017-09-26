@@ -4,6 +4,7 @@ import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
 import NewCard from './components/NewCard'
 import NewDeck from './components/NewDeck'
+import Quiz from './components/Quiz'
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import { Entypo } from '@expo/vector-icons'
 import { black, white } from './utils/colors'
@@ -41,6 +42,9 @@ const Stack = StackNavigator({
   },
   NewCard: {
     screen: NewCard
+  },
+  Quiz: {
+    screen: Quiz
   }
 })
 
