@@ -17,10 +17,13 @@ class DeckDetail extends Component {
           onPress={() => navigation.navigate('NewCard', { title })} >
           <Text>Add Card</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.startQuizButton}
-          onPress={() => navigation.navigate('Quiz', { deck })} >
-          <Text style={{color: white}}>Start Quiz</Text>
-        </TouchableOpacity>
+        {
+          questions.length > 0 &&
+          <TouchableOpacity style={styles.startQuizButton}
+            onPress={() => navigation.navigate('Quiz', { deck })} >
+            <Text style={{color: white}}>Start Quiz</Text>
+          </TouchableOpacity>
+        }
       </View>
     )
   }

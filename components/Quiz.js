@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import QuizResults from './QuizResults'
 import { setLocalNotification, clearLocalNotification } from '../utils/_notifications'
+import { white, black, gray, green, red } from '../utils/colors'
 
 export default class Quiz extends Component {
 
@@ -57,25 +58,72 @@ export default class Quiz extends Component {
       )
     } else {
       return (
-        <View>
-          <Text>Deck: { title }</Text>
-          <Text>{currentQuestion} / {questions.length}</Text>
+        <View style={styles.container}>
+          <Text style={styles.numCards}>{currentQuestion} / {questions.length}</Text>
           {
-            showQuestion ?
-            <Text>{ questions[currentQuestion - 1].question }</Text> :
-            <Text>{ questions[currentQuestion - 1].answer }</Text>
+            <Text style={styles.cardText}>
+              {
+                showQuestion ?
+                questions[currentQuestion - 1].question :
+                questions[currentQuestion - 1].answer
+              }
+            </Text>
           }
-          <TouchableOpacity onPress={this.flipCard}>
+          <TouchableOpacity style={styles.flipCardButton}
+                            onPress={this.flipCard}>
             <Text>{ showQuestion ? 'answer' : 'question' }</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.getNextQuestion.bind(null, true)}>
-            <Text>Correct</Text>
+          <TouchableOpacity style={styles.correctButton}
+                            onPress={this.getNextQuestion.bind(null, true)}>
+            <Text style={{color: black, fontWeight: 'bold'}}>Correct</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={this.getNextQuestion.bind(null, false)}>
-            <Text>Incorrect</Text>
+          <TouchableOpacity style={styles.incorrectButton}
+            onPress={this.getNextQuestion.bind(null, false)}>
+            <Text style={{color: black, fontWeight: 'bold'}}>Incorrect</Text>
           </TouchableOpacity>
         </View>
       )
     }
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: white
+  },
+  cardText: {
+    fontSize: 42,
+    fontWeight: '500'
+  },
+  numCards: {
+    fontSize: 18,
+    fontWeight: '500',
+    color: gray
+  },
+  flipCardButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    backgroundColor: white,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: black
+  },
+  correctButton: {
+    marginTop: 60,
+    marginBottom: 20,
+    paddingVertical: 20,
+    paddingHorizontal: 60,
+    backgroundColor: green,
+    borderRadius: 5
+  },
+  incorrectButton: {
+    paddingVertical: 20,
+    paddingHorizontal: 60,
+    backgroundColor: red,
+    borderRadius: 5
+  }
+})
