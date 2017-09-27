@@ -66,7 +66,13 @@ const Tabs = TabNavigator({
   }
 }, {
   tabBarOptions: {
-    activeTintColor: black
+    activeTintColor: black,
+    labelStyle: {
+      color: black
+    },
+    style: {
+      backgroundColor: white
+    }
   }
 })
 
